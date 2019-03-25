@@ -11,38 +11,34 @@ const codes = [
   "a"           // 65
 ];
 
-// store key code combo sequence to check
-// const combo = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-
-let keyPressed = '';
-let keyCombos = [];
-let pressCount = 0;
-
 function init() {
-  
+  let count = 0; // keep track of keyPress count
+  let magicNumber = codes.length; // = 10
   // attach event listener to document
-  document.onkeydown = function(e) {
+  document.body.addEventListener("keydown", (e) => {
+  // document.onkeydown = function(e) {
+    const keyPress = e.key; // capture key pressed from event
 
-  keyPressed = e.key;
-  keyCombos.push(keyPressed);
-  pressCount++;
-
-  // only run checks once valid sequence length is reached
-  if (pressCount >= codes.length) {  
-    
-    if (keyCombos.slice(-10).toString() == codes.toString()) {
-      alert("Combo was hit!");
-      keyCombos.length = 0; // reset array to start over
+    if (codes[count] == keyPress) {
+      // each time key matches increase count,
+      ++count; // so we can check next value in codes array
+    } else {
+      // or reset count
+      count.length = 0; 
     }
 
-  }
-  
-  // console.log(e.which); 
-  console.log(e.key); // sanity check
-};
+    if (count == magicNumber) {
+      // if keyPress count number matches 10 times in a row,
+      alert("Konami code"); // we have a winner!
+      count = 0; // reset count
+    }
+
+  console.log(keyPress); // sanity check
+  // };
+  });
 
   
 }
 
 // run the function
-init();
+// init();
